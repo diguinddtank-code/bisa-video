@@ -49,26 +49,21 @@ nav .links a:hover{opacity:1}
 .scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px}
 .scroll-hint .line{width:1px;height:42px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5))}
 
-/* ===== INTERLUDE ===== */
-.interlude{position:relative;height:180vh;background:var(--dark)}
-.interlude-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 24px}
-.interlude-inner{max-width:800px}
-.interlude-inner h2{font-family:'Bebas Neue';font-size:clamp(2.6rem,7vw,6rem);line-height:.95}
-.interlude .label{opacity:0}
-.interlude h2{opacity:0;transform:translateY(30px)}
-
 /* ===== ZOOM FLYTHROUGH (image sequence) ===== */
 .hot-prompt{position:absolute;top:100px;left:50%;transform:translateX(-50%);z-index:10;font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:.25em;font-size:.8rem;color:var(--green);background:rgba(5,5,5,.5);padding:10px 20px;backdrop-filter:blur(6px)}
-.zoom-section{position:relative;height:700vh}
+.zoom-section{position:relative;height:850vh}
 .zoom-sticky{position:sticky;top:0;height:100vh;width:100%;overflow:hidden}
 .zoom-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;will-change:opacity,transform}
 .zoom-vig{position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(to bottom,rgba(5,5,5,.35) 0%,transparent 30%,transparent 65%,rgba(5,5,5,.85) 100%)}
-.zoom-caption{position:absolute;left:48px;bottom:90px;z-index:6;width:520px;max-width:calc(100% - 96px);height:180px}
-.zoom-caption .cap{position:absolute;left:0;right:0;bottom:0;opacity:0;transition:opacity .5s}
-.zoom-caption .num{font-family:'Bebas Neue';font-size:3rem;color:var(--green);line-height:1}
-.zoom-caption h2{font-family:'Bebas Neue';font-size:clamp(1.8rem,4.5vw,3.2rem);line-height:1;margin:4px 0 10px}
-.zoom-caption p{font-weight:300;color:rgba(245,245,240,.78);font-size:1.02rem;line-height:1.5;width:400px;max-width:100%}
-@media(max-width:768px){.zoom-caption{left:24px;right:24px;width:auto;bottom:70px;height:auto}}
+
+/* ===== BLUEPRINT INTRO ===== */
+#bpPitch{filter:drop-shadow(0 0 14px rgba(204,255,0,.35));transition:none}
+.bp-label{opacity:0;margin-bottom:34px;font-size:.82rem;letter-spacing:.4em}
+.bp-stats{display:flex;gap:48px;margin-top:40px;flex-wrap:wrap;justify-content:center}
+@media(max-width:768px){.bp-stats{gap:24px;margin-top:26px}}
+.bp-stat{display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(20px)}
+.bp-stat .bp-n{font-family:'Bebas Neue';font-size:clamp(2.2rem,5vw,3.6rem);color:var(--green);line-height:1}
+.bp-stat .bp-l{font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:rgba(245,245,240,.6);margin-top:6px}
 
 /* ===== HOTSPOTS ===== */
 .hotspots{position:relative;background:var(--dark);padding:120px 0}
@@ -220,30 +215,42 @@ footer .info{color:rgba(245,245,240,.4);font-size:.85rem;font-weight:300}
   </div>
 </section>
 
-<!-- ===== INTERLUDE ===== -->
-<section class="interlude" id="interlude">
-  <div class="interlude-sticky">
-    <div class="interlude-inner">
-      <div class="label" id="interLabel" style="margin-bottom:20px">Work In Progress</div>
-      <h2 id="interTitle">Preparing the field<br>for the <span style="color:var(--green)">champions</span>.</h2>
-    </div>
-  </div>
-</section>
-
 <!-- ===== ZOOM FLYTHROUGH ===== -->
 <section class="zoom-section" id="explore">
   <div class="zoom-sticky">
     <img class="zoom-frame" data-z="0" src="public/images/CLOSER_1.png" alt="">
     <img class="zoom-frame" data-z="1" src="public/images/CLOSER_2.png" alt="">
     <img class="zoom-frame" data-z="2" src="public/images/CLOSER_3.png" alt="">
-    <img class="zoom-frame" data-z="3" src="public/images/CAMPO_DEPOIS_2LOGOS.png" alt="">
+    <img class="zoom-frame" data-z="3" src="public/images/CAMPO_ANTES.png" alt="">
+    <img class="zoom-frame" data-z="4" src="public/images/CAMPO_DEPOIS_2LOGOS.png" alt="">
+    <!-- glowing wipe line that travels across during the BEFORE→AFTER reveal -->
+    <div id="wipeLine" style="position:absolute;top:0;bottom:0;left:0;width:3px;background:var(--green);box-shadow:0 0 40px 10px rgba(204,255,0,.7);opacity:0;z-index:4;pointer-events:none"></div>
     <div class="zoom-vig"></div>
-    <div id="zoomFadeIn" style="position:absolute;inset:0;z-index:7;background:var(--dark);opacity:1;pointer-events:none"></div>
-    <div class="zoom-caption">
-      <div class="cap" data-zc="0"><div class="num">—</div><h2>An Aerial View</h2><p>A complete sports destination on Discovery Drive.</p></div>
-      <div class="cap" data-zc="1"><div class="num">—</div><h2>Closer</h2><p>Two full-size synthetic turf pitches, side by side.</p></div>
-      <div class="cap" data-zc="2"><div class="num">—</div><h2>On The Pitch</h2><p>Where the next generation trains, every day.</p></div>
-      <div class="cap" data-zc="3"><div class="num">—</div><h2>The Vision, Realized</h2><p>Soccer, baseball, and a modern clubhouse — one home.</p></div>
+    <!-- dark overlay -->
+    <div id="zoomDark" style="position:absolute;inset:0;z-index:6;background:var(--dark);opacity:1;pointer-events:none"></div>
+
+    <!-- DYNAMIC BLUEPRINT INTRO: pitch draws itself + live info -->
+    <div id="blueprintIntro" style="position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6vh 24px;pointer-events:none">
+      <div class="bp-label label" id="bpLabel">From Blueprint To Reality</div>
+      <svg id="bpPitch" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet" style="width:min(70vw,760px);height:auto;max-height:52vh">
+        <g fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect class="bpl" x="40" y="40" width="920" height="560"/>
+          <line class="bpl" x1="500" y1="40" x2="500" y2="600"/>
+          <circle class="bpl" cx="500" cy="320" r="90"/>
+          <circle class="bpd" cx="500" cy="320" r="5" fill="var(--green)" stroke="none"/>
+          <rect class="bpl" x="40" y="180" width="150" height="280"/>
+          <rect class="bpl" x="40" y="250" width="60" height="140"/>
+          <rect class="bpl" x="810" y="180" width="150" height="280"/>
+          <rect class="bpl" x="900" y="250" width="60" height="140"/>
+          <circle class="bpd" cx="150" cy="320" r="5" fill="var(--green)" stroke="none"/>
+          <circle class="bpd" cx="850" cy="320" r="5" fill="var(--green)" stroke="none"/>
+        </g>
+      </svg>
+      <div class="bp-stats" id="bpStats">
+        <div class="bp-stat"><span class="bp-n">2</span><span class="bp-l">FIFA-Standard Pitches</span></div>
+        <div class="bp-stat"><span class="bp-n">250+</span><span class="bp-l">Young Athletes</span></div>
+        <div class="bp-stat"><span class="bp-n">1</span><span class="bp-l">Shared Vision</span></div>
+      </div>
     </div>
 
     <!-- detail image shown when a hotspot is clicked (overlays the final frame) -->
@@ -422,87 +429,151 @@ function setupVideoScrub(){
       const caps=document.querySelectorAll('#videoCaption .cap');
       const phase = p<0.35?0:(p<0.8?1:2);
       caps.forEach((c,i)=>c.style.opacity=(i===phase&&p>0.15)?1:0);
-      // quick fade to black at the very end → flows into interlude
-      document.getElementById('heroFadeOut').style.opacity = p>0.95 ? (p-0.95)/0.05 : 0;
+      // clean quick fade to dark at the very end → flows into the blueprint
+      const hf=document.getElementById('heroFadeOut');
+      hf.style.background='var(--dark)';
+      hf.style.opacity = p>0.94 ? (p-0.94)/0.06 : 0;
     }});
 }
 if(video.readyState>=1) setupVideoScrub(); else video.addEventListener('loadedmetadata',setupVideoScrub);
 video.addEventListener('loadeddata',()=>{video.currentTime=0.01;});
 
-/* ===== INTERLUDE ===== */
-ScrollTrigger.create({
-  trigger:'.interlude', start:'top top', end:'bottom bottom', scrub:1,
-  onUpdate:self=>{
-    const p=self.progress;
-    // fade in 0..0.35, hold, fade out 0.7..1
-    let op = p<0.15 ? p/0.15 : (p>0.85 ? 1-(p-0.85)/0.15 : 1);
-    op=Math.max(0,Math.min(1,op));
-    const label=document.getElementById('interLabel');
-    const title=document.getElementById('interTitle');
-    label.style.opacity=op;
-    title.style.opacity=op;
-    title.style.transform=`translateY(${(1-op)*30}px)`;
-  }
-});
-
-/* ===== ZOOM FLYTHROUGH ===== */
+/* ===== ZOOM FLYTHROUGH (with blueprint intro) ===== */
 const zframes=gsap.utils.toArray('.zoom-frame');
-const zcaps=gsap.utils.toArray('.zoom-caption .cap');
 const ZN=zframes.length;
 gsap.set(zframes[0],{opacity:1});
-const FLY=0.78; // flythrough occupies first 78% of scroll; rest holds for hotspots
-// init: all frames start scaled, only first visible
-zframes.forEach((im,i)=>{im.style.transformOrigin='50% 50%';});
+
+// init blueprint pitch line lengths for draw-on effect
+const bpLines=gsap.utils.toArray('#bpPitch .bpl');
+bpLines.forEach(el=>{
+  let len=1000;
+  try{ if(el.getTotalLength){ const l=el.getTotalLength(); if(l>0) len=l; } }catch(e){}
+  el.style.strokeDasharray=len;
+  el.style.strokeDashoffset=len;
+  el.dataset.len=len;
+});
+const bpDots=gsap.utils.toArray('#bpPitch .bpd');
+const bpStatsEls=gsap.utils.toArray('.bp-stat');
+
+// Phases: tight timing — BLUEPRINT materializes fast, then dives into reality
+const BP_DRAW=0.05, BP_HOLD=0.13, FLY_START=0.22, FLY_END=0.78;
+
+zframes.forEach(im=>{im.style.transformOrigin='50% 50%';});
+
 ScrollTrigger.create({
   trigger:'.zoom-section',start:'top top',end:'bottom bottom',scrub:1.2,
   onUpdate:self=>{
     const raw=self.progress;
-    const flyP=Math.min(1, raw/FLY);            // 0..1 across the flythrough
-    const f=flyP*(ZN-1);                         // continuous position in the stack
-    const cur=Math.floor(f), frac=f-cur;         // current pair + blend (0..1)
-    // smootherstep on the blend so transitions ease in/out (no linear "swap" feel)
+    const zoomDark=document.getElementById('zoomDark');
+    const intro=document.getElementById('blueprintIntro');
+    const bpLabel=document.getElementById('bpLabel');
+    const bpPitch=document.getElementById('bpPitch');
+
+    // --- BLUEPRINT INTRO: lines materialize with energy ---
+    if(raw<BP_HOLD){
+      intro.style.opacity=1;
+      // pitch begins slightly larger than rest, settles in (camera arrives)
+      const settle=Math.min(1, raw/BP_DRAW);
+      const scale=1.06 - settle*0.06;
+      // label appears with the smallest delay, slight rise
+      const lp=Math.min(1, raw/0.012);
+      bpLabel.style.opacity=lp;
+      bpLabel.style.transform=`translateY(${(1-lp)*-10}px)`;
+      // pitch lines draw — staggered, with strong glow that softens as they settle
+      const drawP=Math.min(1, raw/BP_DRAW);
+      const eased=drawP*drawP*(3-2*drawP); // smoothstep
+      bpLines.forEach((el,i)=>{
+        const start=(i/bpLines.length)*0.35;
+        const lp=Math.max(0,Math.min(1,(eased-start)/(1-start)));
+        el.style.strokeDashoffset=(+el.dataset.len)*(1-lp);
+      });
+      bpDots.forEach(d=>d.style.opacity=drawP>0.85?1:0);
+      // glow is intense during drawing, settles as it completes
+      const glowIntensity=1-eased;
+      bpPitch.style.filter=`drop-shadow(0 0 ${10+glowIntensity*32}px rgba(204,255,0,${0.3+glowIntensity*0.45}))`;
+      bpPitch.style.transform=`scale(${scale.toFixed(3)})`;
+      // stats stagger in AFTER pitch is done
+      bpStatsEls.forEach((s,i)=>{
+        const sp=Math.max(0,Math.min(1,(drawP-0.7-i*0.08)/0.18));
+        s.style.opacity=sp;
+        s.style.transform=`translateY(${(1-sp)*16}px)`;
+      });
+      zoomDark.style.opacity=1;
+    }
+    // --- REVEAL: dive through the blueprint into the real complex ---
+    else if(raw<FLY_START){
+      const t=(raw-BP_HOLD)/(FLY_START-BP_HOLD);
+      const te=t*t*(3-2*t);
+      // pitch zooms in (camera dives) + fades + glow flares one last time before vanishing
+      intro.style.opacity=1-te*te;
+      bpPitch.style.transform=`scale(${(1+te*1.6).toFixed(3)})`;
+      bpPitch.style.filter=`drop-shadow(0 0 ${10+(1-te)*40}px rgba(204,255,0,${0.3+te*0.4}))`;
+      // dark overlay lifts revealing CLOSER_1 underneath
+      zoomDark.style.opacity=1-te;
+    }
+    else {
+      intro.style.opacity=0;
+      zoomDark.style.opacity=0;
+    }
+
+    // --- FLYTHROUGH ---
+    const flyRange=FLY_END-FLY_START;
+    const flyP=Math.max(0, Math.min(1, (raw-FLY_START)/flyRange));
+    const f=flyP*(ZN-1);
+    const cur=Math.floor(Math.min(f, ZN-2));
+    const frac=f-cur;
     const e=frac*frac*frac*(frac*(frac*6-15)+10);
+    const isWipe = (raw>=FLY_START) && (cur === ZN-2); // last transition = before→after wipe
+    const wipeLine=document.getElementById('wipeLine');
 
     zframes.forEach((im,i)=>{
-      if(i===ZN-1 && window.__diving) return;    // don't fight the dive animation
-      let op=0, scale=1;
-      if(i<cur){               // already passed: keep zoomed way in, invisible
-        op=0; scale=2.4;
-      } else if(i===cur){      // outgoing: continues flying IN as it fades
-        op=1-e;
-        scale=1.0 + e*1.4;     // 1.0 -> 2.4  (strong forward push)
-      } else if(i===cur+1){    // incoming: starts a bit pulled-back, settles forward
-        op=e;
-        scale=0.82 + e*0.18;   // 0.82 -> 1.0 (camera "arrives" onto it)
-      } else {                 // upcoming: hidden, pre-scaled small
-        op=0; scale=0.82;
+      if(i===ZN-1 && window.__diving) return;
+      let op=0, scale=1, clip='none';
+      if(raw<BP_HOLD){
+        op=(i===0)?1:0; scale=(i===0)?1.18:1;
+      } else if(raw<FLY_START){
+        const t=(raw-BP_HOLD)/(FLY_START-BP_HOLD);
+        const te=t*t*(3-2*t);
+        op=(i===0)?1:0; scale=(i===0)?(1.18-te*0.18):1;
+      } else if(isWipe){
+        // BEFORE/AFTER wipe — both at 1:1, clip-path reveals DEPOIS over ANTES
+        if(i===cur){ op=1; scale=1; }                                  // CAMPO_ANTES (stays)
+        else if(i===cur+1){                                            // CAMPO_DEPOIS (wipes in)
+          op=1; scale=1;
+          clip=`inset(0 ${((1-e)*100).toFixed(2)}% 0 0)`;
+        } else { op=0; scale=2.2; }
+      } else {
+        // standard flythrough segments
+        if(i<cur){ op=0; scale=2.2; }
+        else if(i===cur){ op=1-e; scale=1.0+e*1.2; }
+        else if(i===cur+1){ op=e; scale=0.85+e*0.15; }
+        else { op=0; scale=0.85; }
       }
-      if(i===ZN-1 && flyP>=1){op=1;scale=1;}     // hold final frame at rest
-      // subtle motion blur peaks mid-transition (sells the speed)
-      const blur = (i===cur||i===cur+1) ? Math.sin(e*Math.PI)*3 : 0;
+      if(i===ZN-1 && flyP>=1){ op=1; scale=1; clip='none'; }
+      const blur=(!isWipe && raw>=FLY_START && (i===cur||i===cur+1))?Math.sin(e*Math.PI)*2:0;
       im.style.opacity=op;
       im.style.transform=`scale(${scale.toFixed(4)})`;
-      im.style.filter = blur>0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+      im.style.filter=blur>0.05?`blur(${blur.toFixed(2)}px)`:'none';
+      im.style.clipPath=clip;
     });
 
-    // captions only during flythrough, fade with the blend
-    zcaps.forEach((c,i)=>{
-      let o=0;
-      if(raw<FLY){
-        if(i===cur) o=1-e;
-        else if(i===cur+1) o=e;
-      }
-      c.style.opacity=o;
-    });
-    document.getElementById('zoomFadeIn').style.opacity = raw<0.03 ? 1-(raw/0.03) : 0;
+    // wipe line follows the reveal edge
+    if(isWipe && e>0 && e<1){
+      wipeLine.style.left=`${(e*100).toFixed(2)}%`;
+      wipeLine.style.opacity=Math.sin(e*Math.PI)*1.0;
+    } else {
+      wipeLine.style.opacity=0;
+    }
+
+    // --- HOTSPOTS ---
     const hotLayer=document.getElementById('hotLayer');
-    if(raw>=FLY){ hotLayer.style.opacity=1; hotLayer.style.pointerEvents='auto'; }
-    else { hotLayer.style.opacity=0; hotLayer.style.pointerEvents='none'; }
+    if(raw>=FLY_END){hotLayer.style.opacity=1;hotLayer.style.pointerEvents='auto';}
+    else{hotLayer.style.opacity=0;hotLayer.style.pointerEvents='none';}
   }
 });
 
 /* ===== HOTSPOTS with blur-zoom dive ===== */
-const finalFrame=zframes[ZN-1]; // CAMPO_DEPOIS_2LOGOS
+const finalFrame=zframes[ZN-1];
 const hotDetail=document.getElementById('hotDetail');
 const hotCard=document.getElementById('hotCard');
 const hotReset=document.getElementById('hotReset');
