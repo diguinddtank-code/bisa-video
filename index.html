@@ -24,7 +24,8 @@ img{display:block;max-width:100%}
 .pl-inner{text-align:center;width:min(420px,80vw)}
 .pl-logos{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:34px}
 .pl-logos img{height:40px;object-fit:contain;opacity:0;transform:translateY(14px)}
-.pl-logos .pl-hend{background:#fff;padding:6px 14px;border-radius:3px;height:36px}
+.pl-logos .pl-hend-wrap{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);padding:8px 16px;border-radius:6px;display:flex;align-items:center;opacity:0;transform:translateY(14px)}
+.pl-logos .pl-hend{height:24px;filter:brightness(0) invert(1);opacity:.9}
 .pl-logos .pl-x{font-family:'Bebas Neue';font-size:1.2rem;color:var(--g);opacity:0}
 .pl-bar{width:100%;height:2px;background:rgba(255,255,255,.1);position:relative;overflow:hidden}
 .pl-bar-fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--g);box-shadow:0 0 14px rgba(204,255,0,.6)}
@@ -77,7 +78,8 @@ section::before{content:'';position:absolute;top:-1px;left:0;right:0;height:140p
 .hero-eyebrow{font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:.45em;font-size:.72rem;color:var(--g);margin-bottom:34px;opacity:0}
 .hero-logos{display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:42px;opacity:0}
 .hero-logos img{height:54px;object-fit:contain}.hero-logos .bisa{filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
-.hero-logos .hend{background:#fff;padding:8px 20px;border-radius:3px;height:50px}
+.hero-logos .hend-wrap{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);padding:10px 22px;border-radius:6px;display:flex;align-items:center}
+.hero-logos .hend{height:30px;filter:brightness(0) invert(1);opacity:.9}
 .hero-logos .x{font-family:'Bebas Neue';font-size:1.4rem;color:var(--g);opacity:.55}
 .hero h1{font-size:clamp(2.8rem,8.5vw,7.5rem);margin-bottom:26px;text-shadow:0 4px 40px rgba(0,0,0,.4)}
 .hero .sub{font-weight:300;color:rgba(245,245,240,.75);font-size:1.06rem;max-width:540px;margin:0 auto;line-height:1.6;opacity:0;text-shadow:0 2px 20px rgba(0,0,0,.5)}
@@ -253,7 +255,7 @@ footer .fl{font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:.1em;color:v
     <div class="pl-logos">
       <img class="pl-bisa" src="https://i.imgur.com/mHzuZgK.png" alt="BISA">
       <span class="pl-x">×</span>
-      <img class="pl-hend" src="https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/9828/mfnAMWTTAmaioOnAOZzg" alt="Hendrick">
+      <span class="pl-hend-wrap"><img class="pl-hend" src="https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/9828/mfnAMWTTAmaioOnAOZzg" alt="Hendrick"></span>
     </div>
     <div class="pl-bar"><div class="pl-bar-fill" id="plFill"></div></div>
     <div class="pl-count" id="plCount">0</div>
@@ -278,7 +280,7 @@ footer .fl{font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:.1em;color:v
     <div class="hero-logos">
       <img class="bisa" src="https://i.imgur.com/mHzuZgK.png" alt="BISA">
       <span class="x">×</span>
-      <img class="hend" src="https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/9828/mfnAMWTTAmaioOnAOZzg" alt="Hendrick">
+      <span class="hend-wrap"><img class="hend" src="https://dka575ofm4ao0.cloudfront.net/pages-transactional_logos/retina/9828/mfnAMWTTAmaioOnAOZzg" alt="Hendrick"></span>
     </div>
     <h1><span class="lh"><span>A Meaningful</span></span><span class="lh"><span><em>Partnership</em> Begins.</span></span></h1>
     <p class="sub">Building the future of youth soccer in Metro Charleston — and inviting Hendrick Automotive Group to help lead the way.</p>
@@ -472,7 +474,7 @@ footer .fl{font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:.1em;color:v
 (function(){
   const pre=document.getElementById('preloader'),fill=document.getElementById('plFill'),count=document.getElementById('plCount');
   if(!pre)return;
-  gsap.to('.pl-logos img, .pl-x',{opacity:1,y:0,duration:.7,stagger:.12,ease:'power3.out',delay:.2});
+  gsap.to('.pl-logos img, .pl-logos span, .pl-x',{opacity:1,y:0,duration:.7,stagger:.12,ease:'power3.out',delay:.2});
   const obj={v:0};
   gsap.to(obj,{v:100,duration:1.8,ease:'power1.inOut',delay:.5,
     onUpdate:()=>{const n=Math.round(obj.v);count.textContent=n;fill.style.width=n+'%';},
